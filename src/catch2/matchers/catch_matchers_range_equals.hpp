@@ -108,6 +108,19 @@ namespace Catch {
 
         /**
          * Creates a matcher that checks if all elements in a range are equal
+         * to all elements in an initializer list.
+         *
+         * Uses `std::equal_to` to do the comparison
+         */
+        template <typename T>
+        constexpr
+        RangeEqualsMatcher<std::initializer_list<T>, std::equal_to<>>
+        RangeEquals( std::initializer_list<T> range ) {
+            return { range, std::equal_to<>{} };
+        }
+
+        /**
+         * Creates a matcher that checks if all elements in a range are equal
          * to all elements in another range.
          *
          * Uses the provided predicate `predicate` to do the comparisons
@@ -117,6 +130,19 @@ namespace Catch {
         RangeEqualsMatcher<RangeLike, Equality>
         RangeEquals( RangeLike&& range, Equality&& predicate ) {
             return { CATCH_FORWARD( range ), CATCH_FORWARD( predicate ) };
+        }
+
+        /**
+         * Creates a matcher that checks if all elements in a range are equal
+         * to all elements in an initializer list.
+         *
+         * Uses the provided predicate `predicate` to do the comparisons
+         */
+        template <typename T, typename Equality>
+        constexpr
+        RangeEqualsMatcher<std::initializer_list<T>, Equality>
+        RangeEquals( std::initializer_list<T> range, Equality&& predicate ) {
+            return { range, CATCH_FORWARD( predicate ) };
         }
 
         /**
@@ -136,6 +162,19 @@ namespace Catch {
 
         /**
          * Creates a matcher that checks if all elements in a range are equal
+         * to all elements in an initializer list, in some permutation
+         *
+         * Uses `std::equal_to` to do the comparison
+         */
+        template <typename T>
+        constexpr
+        UnorderedRangeEqualsMatcher<std::initializer_list<T>, std::equal_to<>>
+        UnorderedRangeEquals( std::initializer_list<T> range ) {
+            return { range, std::equal_to<>{} };
+        }
+
+        /**
+         * Creates a matcher that checks if all elements in a range are equal
          * to all elements in another range, in some permutation.
          *
          * Uses the provided predicate `predicate` to do the comparisons
@@ -145,6 +184,19 @@ namespace Catch {
         UnorderedRangeEqualsMatcher<RangeLike, Equality>
         UnorderedRangeEquals( RangeLike&& range, Equality&& predicate ) {
             return { CATCH_FORWARD( range ), CATCH_FORWARD( predicate ) };
+        }
+
+        /**
+         * Creates a matcher that checks if all elements in a range are equal
+         * to all elements in an initializer list, in some permutation.
+         *
+         * Uses the provided predicate `predicate` to do the comparisons
+         */
+        template <typename T, typename Equality>
+        constexpr
+        UnorderedRangeEqualsMatcher<std::initializer_list<T>, Equality>
+        UnorderedRangeEquals( std::initializer_list<T> range, Equality&& predicate ) {
+            return { range, CATCH_FORWARD( predicate ) };
         }
     } // namespace Matchers
 } // namespace Catch
